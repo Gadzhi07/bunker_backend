@@ -1,0 +1,1 @@
+DB_URL="postgresql+asyncpg://login:password@ip:port/dbname"
