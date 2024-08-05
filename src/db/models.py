@@ -67,7 +67,8 @@ class Game(Base):
     opened_bunker_cards: Mapped[list["OpenedBunkerCards"]] = relationship(backref="game")
     status: Mapped["GameStatus"] = mapped_column(ENUM(GameStatus, name="game_status_enum", create_type=False),
                                                  server_default=GameStatus.wait)
-    current_queue: Mapped[Optional[int]] = mapped_column(ForeignKey("user_gamedata.id", use_alter=True))
+    current_queue: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("user_gamedata.id", use_alter=True, name="games_current_queue_fk"))
 
     owner: Mapped["User"] = relationship(backref="owner_of_games")
     settings: Mapped["Settings"] = relationship(backref="used_in_games")
