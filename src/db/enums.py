@@ -3,11 +3,7 @@ from enum import StrEnum, auto
 
 class GameStatus(StrEnum):
     wait = auto()
-    round_1 = "1"
-    round_2 = "2"
-    round_3 = "3"
-    round_4 = "4"
-    round_5 = "5"
+    rounds = auto()
     advanced = auto()
     finished = auto()
 
@@ -18,13 +14,13 @@ class TeamSide(StrEnum):
 
 
 class GameMode(StrEnum):
-    Basic = auto()
-    Advanced = auto()
+    Basic = "Basic"
+    Advanced = "Advanced"
 
 
 class BunkerCardType(StrEnum):
-    BunkerCard = auto()
-    DangerCard = auto()
+    BunkerCard = "BunkerCard"
+    DangerCard = "DangerCard"
 
 
 class CharacterCardType(StrEnum):

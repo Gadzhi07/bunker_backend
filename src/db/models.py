@@ -28,7 +28,7 @@ class EnabledTypeCard(Base):
     id: Mapped[intpk]
     settings_id: Mapped[int] = mapped_column(ForeignKey("settings.id"))
     card_type: Mapped["CharacterCardType"] = mapped_column(
-        ENUM(CharacterCardType, name="character_card_type_enum", create_type=False))
+        ENUM(CharacterCardType, name="character_card_type_enum"))
 
 
 class Settings(Base):
@@ -36,7 +36,7 @@ class Settings(Base):
 
     id: Mapped[intpk]
     creator_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    game_mode: Mapped["GameMode"] = mapped_column(ENUM(GameMode, name="game_mode_enum", create_type=False),
+    game_mode: Mapped["GameMode"] = mapped_column(ENUM(GameMode, name="game_mode_enum"),
                                                   server_default=GameMode.Basic)
     count_sc_cards: Mapped[int]
     time_to_open_card: Mapped[int]
@@ -65,7 +65,7 @@ class Game(Base):
     settings_id: Mapped[int] = mapped_column(ForeignKey("settings.id"))
     disaster_image_url: Mapped[str] =  mapped_column(String)
     opened_bunker_cards: Mapped[list["OpenedBunkerCards"]] = relationship(backref="game")
-    status: Mapped["GameStatus"] = mapped_column(ENUM(GameStatus, name="game_status_enum", create_type=False),
+    status: Mapped["GameStatus"] = mapped_column(ENUM(GameStatus, name="game_status_enum"),
                                                  server_default=GameStatus.wait)
     current_queue: Mapped[Optional[int]] = mapped_column(
         ForeignKey("user_gamedata.id", use_alter=True, name="games_current_queue_fk"))
@@ -116,7 +116,7 @@ class Rounds(Base):
     game_id: Mapped[str] = mapped_column(ForeignKey("games.id"))
     needed_votes: Mapped[int]
     type_of_card_to_open: Mapped[Optional["CharacterCardType"]] = mapped_column(
-        ENUM(CharacterCardType, name="character_card_type_enum", create_type=False))
+        ENUM(CharacterCardType, name="character_card_type_enum"))
 
 
 class VotesRounds(Base):
@@ -146,7 +146,7 @@ class OpenedBunkerCards(Base):
     game_id: Mapped[str] = mapped_column(ForeignKey("games.id"), primary_key=True)
     card_image_url: Mapped[str] = mapped_column(String, primary_key=True)
     team_side: Mapped['TeamSide'] = mapped_column(
-        ENUM(TeamSide, name="team_side_enum", create_type=False), server_default=TeamSide.not_kicked)
+        ENUM(TeamSide, name="team_side_enum"), server_default=TeamSide.not_kicked)
     bunker_card_type: Mapped['BunkerCardType'] = mapped_column(
-        ENUM(BunkerCardType, name="bunker_card_type_enum", create_type=False))
+        ENUM(BunkerCardType, name="bunker_card_type_enum"))
 
