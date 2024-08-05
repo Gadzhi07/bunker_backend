@@ -1,5 +1,5 @@
 from typing import Annotated, Any, Optional
-from .enums import BunkerCardType, GameMode, GameStatus, TeamSide
+from .enums import BunkerCardType, CharacterCardType, GameMode, GameStatus, TeamSide
 from .base import Base
 
 from sqlalchemy import VARCHAR, CheckConstraint, ForeignKey, String, UniqueConstraint, Uuid, text
@@ -27,7 +27,8 @@ class EnabledTypeCard(Base):
 
     id: Mapped[intpk]
     settings_id: Mapped[int] = mapped_column(ForeignKey("settings.id"))
-    card_name: Mapped[str] = mapped_column(VARCHAR(50))
+    card_type: Mapped["CharacterCardType"] = mapped_column(
+        ENUM(CharacterCardType, name="character_card_type_enum", create_type=False))
 
 
 class Settings(Base):
@@ -113,7 +114,8 @@ class Rounds(Base):
     id: Mapped[intpk]
     game_id: Mapped[str] = mapped_column(ForeignKey("games.id"))
     needed_votes: Mapped[int]
-    type_of_card_to_open: Mapped[Optional[str]] = mapped_column(String)
+    type_of_card_to_open: Mapped[Optional["CharacterCardType"]] = mapped_column(
+        ENUM(CharacterCardType, name="character_card_type_enum", create_type=False))
 
 
 class VotesRounds(Base):
@@ -142,9 +144,8 @@ class OpenedBunkerCards(Base):
 
     game_id: Mapped[str] = mapped_column(ForeignKey("games.id"), primary_key=True)
     card_image_url: Mapped[str] = mapped_column(String, primary_key=True)
-    team_side: Mapped['TeamSide'] = mapped_column(ENUM(TeamSide, name="team_side_enum", create_type=False),
-                                                  server_default=TeamSide.not_kicked)
-    card_type: Mapped['BunkerCardType'] = mapped_column(ENUM(BunkerCardType, name="bunker_card_type_enum",
-                                                             create_type=False))
-    type_of_card_to_open: Mapped[Optional[str]] = mapped_column(String)
+    team_side: Mapped['TeamSide'] = mapped_column(
+        ENUM(TeamSide, name="team_side_enum", create_type=False), server_default=TeamSide.not_kicked)
+    bunker_card_type: Mapped['BunkerCardType'] = mapped_column(
+        ENUM(BunkerCardType, name="bunker_card_type_enum", create_type=False))
 

@@ -26,3 +26,14 @@ class BunkerCardType(StrEnum):
     BunkerCard = auto()
     DangerCard = auto()
 
+
+class CharacterCardType(StrEnum):
+    profession = auto()
+    biology = auto()
+    health = auto()
+    hobby = auto()
+    baggage = auto()
+    facts = auto()
+    phobia = auto()
+    character_trait = auto()
+
